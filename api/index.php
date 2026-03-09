@@ -86,7 +86,7 @@ if (!$data) {
 
 // Return clean version - ONLY with our credits
 $output = [
-    "success" => $data['success'] ?? false,
+    "success" => (isset($data['status']) && $data['status'] === 'success') || (isset($data['success']) && $data['success'] === true),
     "credit" => "@Rytce",
     "channel" => "https://t.me/NEOBLADE701",
     "api_valid_until" => "April 6, 2026",
@@ -94,7 +94,9 @@ $output = [
 ];
 
 // Add result data if exists
-if (isset($data['result'])) {
+if (isset($data['data'])) {
+    $output['result'] = $data['data'];
+} elseif (isset($data['result'])) {
     $output['result'] = $data['result'];
 }
 
