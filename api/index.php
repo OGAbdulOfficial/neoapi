@@ -86,18 +86,31 @@ if (!$data) {
 
 // Return clean version - ONLY with our credits
 $output = [
-    "success" => (isset($data['status']) && $data['status'] === 'success') || (isset($data['success']) && $data['success'] === true),
+    "success" => false,
+    "version" => "1.1", // Deployment verification
     "credit" => "@Rytce",
     "channel" => "https://t.me/NEOBLADE701",
     "api_valid_until" => "April 6, 2026",
     "days_remaining" => $remainingDays
 ];
 
-// Add result data if exists
-if (isset($data['data'])) {
+// Determine success from various possible keys
+if (isset($data['status']) && (strcasecmp($data['status'], 'success') === 0 || strcasecmp($data['status'], 'ok') === 0)) {
+    $output['success'] = true;
+} elseif (isset($data['success']) && ($data['success'] === true || $data['success'] === 1 || $data['success'] === 'true' || strcasecmp($data['success'], 'success') === 0)) {
+    $output['success'] = true;
+}
+
+// Add result data if exists - look for 'data' or 'result'
+if (isset($data['data']) && !empty($data['data'])) {
     $output['result'] = $data['data'];
-} elseif (isset($data['result'])) {
+} elseif (isset($data['result']) && !empty($data['result'])) {
     $output['result'] = $data['result'];
+}
+
+// Final check: if we have a result but success is still false, set it to true
+if (isset($output['result']) && $output['success'] === false) {
+    $output['success'] = true;
 }
 
 echo json_encode($output, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
