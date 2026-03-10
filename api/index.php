@@ -14,8 +14,8 @@ if ($currentDate > $expiryDate) {
     echo json_encode([
         "success" => false,
         "message" => "API Expired! Contact @AbdulDevStoreBot for renewal",
-        "credit" => "@AbdulDevStoreBot",
-        "channel" => "https://t.me/AbdulBotzOfficial"
+        "credit" => "@Rytce x nagi",
+        "channel" => "https://t.me/+5C34V2aG5_I3ZWQ1"
     ]);
     exit;
 }
@@ -34,8 +34,8 @@ if (!$userid) {
     echo json_encode([
         "success" => false,
         "message" => "Please provide a Telegram User ID",
-        "credit" => "@AbdulDevStoreBot",
-        "channel" => "https://t.me/AbdulBotzOfficial",
+        "credit" => "@Rytce x nagi",
+        "channel" => "https://t.me/+5C34V2aG5_I3ZWQ1",
         "api_valid_until" => "April 6, 2026",
         "days_remaining" => $remainingDays
     ]);
@@ -62,8 +62,8 @@ if ($response === false || $httpCode !== 200) {
     echo json_encode([
         "success" => false,
         "message" => "Failed to fetch data",
-        "credit" => "@AbdulDevStoreBot",
-        "channel" => "https://t.me/AbdulBotzOfficial",
+        "credit" => "@Rytce x nagi",
+        "channel" => "https://t.me/+5C34V2aG5_I3ZWQ1",
         "api_valid_until" => "April 6, 2026",
         "days_remaining" => $remainingDays
     ]);
@@ -76,8 +76,8 @@ if (!$data) {
     echo json_encode([
         "success" => false,
         "message" => "Invalid response",
-        "credit" => "@AbdulDevStoreBot",
-        "channel" => "https://t.me/AbdulBotzOfficial",
+        "credit" => "@Rytce x nagi",
+        "channel" => "https://t.me/+5C34V2aG5_I3ZWQ1",
         "api_valid_until" => "April 6, 2026",
         "days_remaining" => $remainingDays
     ]);
@@ -86,16 +86,16 @@ if (!$data) {
 
 // Return clean version - ONLY with our credits
 $output = [
-    "success" => $data['success'] ?? false,
-    "credit" => "@AbdulDevStoreBot",
-    "channel" => "https://t.me/AbdulBotzOfficial",
+    "success" => false,
+    "credit" => "@Rytce x nagi ",
+    "channel" => "https://t.me/+5C34V2aG5_I3ZWQ1",
     "api_valid_until" => "April 6, 2026",
     "days_remaining" => $remainingDays
 ];
 
-// Add result data if exists
-if (isset($data['result'])) {
-    $output['result'] = $data['result'];
+if (isset($data['data'])) {
+    $output["success"] = true;
+    $output["result"] = $data["data"];
 }
 
 echo json_encode($output, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
